@@ -10,7 +10,11 @@ export const apiFetch = async (url, options = {}) => {
 
   if (token) headers.Authorization = `Bearer ${token}`;
 
-  const res = await fetch(`${API}${url}`, { ...options, headers });
+  const res = await fetch(`${API}${url}`, {
+    ...options,
+    headers,
+  });
+
   const data = await res.json().catch(() => ({}));
 
   if (!res.ok) throw new Error(data.message || "API Error");
