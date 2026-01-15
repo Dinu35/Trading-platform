@@ -6,7 +6,7 @@ export default function Navbar() {
   const location = useLocation();
 
   const [authUser, setAuthUser] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false); // 🔥 mobile menu
+  const [menuOpen, setMenuOpen] = useState(false);
 
   // 🔐 Load user on route change
   useEffect(() => {
@@ -24,20 +24,20 @@ export default function Navbar() {
 
   return (
     <nav className="w-full bg-black text-white px-6 py-4 relative z-50">
-      <div className="flex justify-between items-center">
-        {/* LOGO */}
+      <div className="flex justify-between items-center relative">
+        {/* LOGO (LEFT) */}
         <h1
           onClick={() => {
             setMenuOpen(false);
             navigate("/");
           }}
-          className="text-2xl font-bold text-green-400 cursor-pointer"
+          className="text-2xl font-bold text-green-400 cursor-pointer z-10"
         >
           AlgoTrade
         </h1>
 
-        {/* DESKTOP MENU */}
-        <div className="hidden md:flex space-x-6 items-center">
+        {/* DESKTOP MENU (CENTERED) */}
+        <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 space-x-6 items-center">
           <Link to="/" className="hover:text-green-400">Home</Link>
           <Link to="/products" className="hover:text-green-400">Courses</Link>
           <Link to="/services" className="hover:text-green-400">Services</Link>
@@ -69,9 +69,12 @@ export default function Navbar() {
               </Link>
             </>
           )}
+        </div>
 
+        {/* DESKTOP AUTH (RIGHT) */}
+        <div className="hidden md:flex gap-3 z-10">
           {!authUser ? (
-            <div className="flex gap-3">
+            <>
               <Link
                 to="/admin/login"
                 className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg font-semibold text-black"
@@ -84,7 +87,7 @@ export default function Navbar() {
               >
                 Register
               </Link>
-            </div>
+            </>
           ) : (
             <button
               onClick={handleLogout}
@@ -104,7 +107,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* ================= MOBILE MENU ================= */}
+      {/* ================= MOBILE MENU (UNCHANGED) ================= */}
       {menuOpen && (
         <div className="md:hidden mt-4 bg-black border-t border-gray-800 rounded-xl p-6 space-y-4">
           <Link onClick={() => setMenuOpen(false)} to="/" className="block text-center">Home</Link>
@@ -114,30 +117,19 @@ export default function Navbar() {
           <Link onClick={() => setMenuOpen(false)} to="/about" className="block text-center">About</Link>
           <Link onClick={() => setMenuOpen(false)} to="/contact" className="block text-center">Contact</Link>
 
-          {/* AUTH BUTTONS – IMPROVED UI */}
           {!authUser ? (
             <div className="pt-4 space-y-3">
               <Link
                 to="/admin/login"
                 onClick={() => setMenuOpen(false)}
-                className="block w-full text-center
-                bg-green-500 text-black
-                py-3 rounded-xl font-semibold
-                shadow-lg shadow-green-500/30
-                hover:bg-green-600 transition"
+                className="block w-full text-center bg-green-500 text-black py-3 rounded-xl font-semibold hover:bg-green-600 transition"
               >
                 Login
               </Link>
-
               <Link
                 to="/register"
                 onClick={() => setMenuOpen(false)}
-                className="block w-full text-center
-                bg-gray-900 border border-green-500
-                text-green-400
-                py-3 rounded-xl font-semibold
-                hover:bg-green-500 hover:text-black
-                transition"
+                className="block w-full text-center bg-gray-900 border border-green-500 text-green-400 py-3 rounded-xl font-semibold hover:bg-green-500 hover:text-black transition"
               >
                 Create Account
               </Link>
